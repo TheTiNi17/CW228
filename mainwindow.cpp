@@ -24,16 +24,15 @@ void MainWindow::updateTime()
 
 void MainWindow::on_TrackingButton_clicked()
 {
-    ui->AllEventsOutput->clear();
-    for (int i = 0; i < Events.size(); i++)
-    {
-        ui->AllEventsOutput->append(QString::fromStdString(Events.at(i).ReturnPrint()));
-    }
+
+
 }
 
 
 void MainWindow::on_CheckFileButton_clicked()
 {
+    ui->AllEventsOutput->setText("");
+
     ui->TrackingButton->setEnabled(false);
     Events.clear();
     Events = fileparser.FileContent(ui->CheckFileLine->text().toStdString());
@@ -67,6 +66,13 @@ void MainWindow::on_CheckFileButton_clicked()
             ui->TrackingButton->setEnabled(true);
             break;
 
+    }
+    if (ui->TrackingButton->isEnabled())
+    {
+        for (int i = 0; i < Events.size(); i++)
+        {
+            ui->AllEventsOutput->append(QString::fromStdString("№ " + std::to_string(i + 1) + ": " + Events.at(i).ReturnPrint()));
+        }
     }
 }
 

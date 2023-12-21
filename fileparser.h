@@ -20,6 +20,7 @@ private:
 public:
     std::vector<Event> FileContent(std::string FileName);
     FileParser();
+    ~FileParser();
     int Check();
 };
 

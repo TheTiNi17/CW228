@@ -5,8 +5,15 @@ FileParser::FileParser()
     //std::string Result = FileContent(FileName);
 }
 
+FileParser::~FileParser()
+{
+    Events.clear();
+}
+
+
 std::vector<Event> FileParser::FileContent(std::string FileName)
 {
+    Events.clear(); // массив обнуляется
     Error = 0; //ошибка обнуляется
     //получение содержимого файла
     std::ifstream file(FileName);
