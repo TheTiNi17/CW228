@@ -11,7 +11,7 @@ class EventGenerator
 {
 public:
     EventGenerator();
-    void Generate(std::vector<Event>);
+    void Generate(std::vector<Event>,QTime currentTime);
 private:
     int EventsAmount = 20;
     enum Types

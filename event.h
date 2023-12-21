@@ -13,17 +13,17 @@ public:
     Event(std::string NewName, std::string NewType, int NewInter);
     std::string GetName();
     std::string GetType();
-    int GetStart();
-    int GetEnd();
-    void SetStart(int newStart);
-    void SetEnd(int newEnd);
+    int GetInterval();
+    QTime GetStart();
+    QTime GetEnd();
+    void SetStart(QTime newStart);
+    void SetEnd(QTime newEnd);
 private:
     std::string TypeName = "default type";
     int Inter = 0;
     std::string Name = "default name";
-    int Start;
-    int End;
-
+    QTime Start;
+    QTime End;
 };
 
 #endif // EVENT_H

@@ -33,22 +33,27 @@ std::string Event::GetName()
     return Name;
 }
 
-int Event::GetStart()
+int Event::GetInterval()
+{
+    return Inter;
+}
+
+QTime Event::GetStart()
 {
     return Start;
 }
 
-int Event::GetEnd()
+QTime Event::GetEnd()
 {
     return End;
 }
 
-void Event::SetStart(int newStart)
+void Event::SetStart(QTime newStart)
 {
     Start = newStart;
 }
 
-void Event::SetEnd(int newEnd)
+void Event::SetEnd(QTime newEnd)
 {
-    End = newEnd;
+    End =newEnd;
 }
