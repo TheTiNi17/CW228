@@ -1,14 +1,17 @@
 #ifndef EVENTGENERATOR_H
 #define EVENTGENERATOR_H
 
+#include <QRandomGenerator>
 #include <time.h>
 #include <stdio.h>
 #include "event.h"
+#include "fileparser.h"
 
 class EventGenerator
 {
 public:
     EventGenerator();
+    void Generate(std::vector<Event>);
 private:
     int EventsAmount = 20;
     enum Types
@@ -19,6 +22,7 @@ private:
         Ebal,
         Sosal
     };
+
 };
 
 #endif // EVENTGENERATOR_H

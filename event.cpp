@@ -17,10 +17,9 @@ void Event::Print()
     std::cout << "\nName: " << Name <<" Type: " << TypeName << " int: " << Inter;
 }
 
-std::string Event::ReturnPrint()
+std::string Event::GetType()
 {
-    std::string Str = "\nName: " + Name + " Type: " + TypeName + " int: " + std::to_string(Inter);
-    return Str;
+    return TypeName;
 }
 
 std::string Event::GetName()
@@ -28,7 +27,22 @@ std::string Event::GetName()
     return Name;
 }
 
-std::string Event::GetType()
+int Event::GetStart()
 {
-    return TypeName;
+    return Start;
+}
+
+int Event::GetEnd()
+{
+    return End;
+}
+
+void Event::SetStart(int newStart)
+{
+    Start = newStart;
+}
+
+void Event::SetEnd(int newEnd)
+{
+    End = newEnd;
 }
