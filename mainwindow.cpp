@@ -24,8 +24,11 @@ void MainWindow::updateTime()
 
 void MainWindow::on_TrackingButton_clicked()
 {
-
-
+    ui->AllEventsOutput->clear();
+    for (int i = 0; i < Events.size(); i++)
+    {
+        ui->AllEventsOutput->append(QString::fromStdString(Events.at(i).ReturnPrint()));
+    }
 }
 
 

@@ -24,7 +24,15 @@ HEADERS += \
 FORMS += \
     mainwindow.ui
 
+TRANSLATIONS += \
+    CW_OOP_ru_RU.ts
+CONFIG += lrelease
+CONFIG += embed_translations
+
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+DISTFILES += \
+    CW_OOP_ru_RU.ts

@@ -17,6 +17,12 @@ void Event::Print()
     std::cout << "\nName: " << Name <<" Type: " << TypeName << " int: " << Inter;
 }
 
+std::string Event::ReturnPrint()
+{
+    std::string Str = "\nName: " + Name + " Type: " + TypeName + " int: " + std::to_string(Inter);
+    return Str;
+}
+
 std::string Event::GetName()
 {
     return Name;

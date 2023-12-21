@@ -8,6 +8,7 @@ class Event
 {
 public:
     Event();
+    std::string ReturnPrint();
     void Print();
     Event(std::string NewName, std::string NewType, int NewInter);
     std::string GetName();
