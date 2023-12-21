@@ -23,6 +23,12 @@ std::string Event::ReturnPrint()
     return Str;
 }
 
+std::string Event::ReturnPrintWithTime()
+{
+    std::string Str = "Название: " + Name + " Тип: " + TypeName + " Интервал: " + std::to_string(Inter) + " S: " + Start.toString().toStdString() + " E: " + End.toString().toStdString();
+    return Str;
+}
+
 std::string Event::GetType()
 {
     return TypeName;

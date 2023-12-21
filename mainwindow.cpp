@@ -17,6 +17,26 @@ MainWindow::~MainWindow()
     delete tmr;
 }
 
+void MainWindow::PrintEvents()
+{
+    ui->AllEventsOutput->setText("");
+    for (int i = 0; i < Events.size(); i++)
+    {
+        ui->AllEventsOutput->append(QString::fromStdString("№ " + std::to_string(i + 1) + ": " + Events.at(i).ReturnPrint()));
+    }
+}
+
+void MainWindow::PrintEventsWithTime()
+{
+    ui->AllEventsOutput->setText("");
+    for (int i = 0; i < Events.size(); i++)
+    {
+        ui->AllEventsOutput->append(QString::fromStdString("№ " + std::to_string(i + 1) + ": " + Events.at(i).ReturnPrintWithTime()));
+    }
+}
+
+void PrintEventsWithTime();
+
 void MainWindow::updateTime()
 {
     ui->label->setText(QTime::currentTime().toString());
@@ -25,6 +45,15 @@ void MainWindow::updateTime()
 void MainWindow::on_TrackingButton_clicked()
 {
 
+    EventGenerator g;
+
+    g.Generate(Events, QTime::currentTime());
+
+    PrintEventsWithTime();
+
+    //EventGenerator.Generate(Events, QTime::currentTime());
+
+    //вывод актуальных ивентов(Events, Актуальный Таймер);
 
 }
 
@@ -69,10 +98,7 @@ void MainWindow::on_CheckFileButton_clicked()
     }
     if (ui->TrackingButton->isEnabled())
     {
-        for (int i = 0; i < Events.size(); i++)
-        {
-            ui->AllEventsOutput->append(QString::fromStdString("№ " + std::to_string(i + 1) + ": " + Events.at(i).ReturnPrint()));
-        }
+            PrintEvents();
     }
 }
 

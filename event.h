@@ -9,6 +9,7 @@ class Event
 public:
     Event();
     std::string ReturnPrint();
+    std::string ReturnPrintWithTime();
     void Print();
     Event(std::string NewName, std::string NewType, int NewInter);
     std::string GetName();
@@ -22,8 +23,8 @@ private:
     std::string TypeName = "default type";
     int Inter = 0;
     std::string Name = "default name";
-    QTime Start;
-    QTime End;
+    QTime Start = QTime(0, 0, 0, 0);
+    QTime End = QTime(0, 0, 0, 0);
 };
 
 #endif // EVENT_H

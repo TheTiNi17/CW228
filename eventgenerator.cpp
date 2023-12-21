@@ -3,19 +3,18 @@
 EventGenerator::EventGenerator()
 {}
 
-void EventGenerator::Generate(std::vector<Event> Events, QTime currentTime)
+void EventGenerator::Generate(std::vector<Event> &Events, QTime currentTime)
 {
 
     QRandomGenerator *generator = QRandomGenerator::global();
 
-    for (int i = 0; i < EventsAmount; ++i)
+    for (int i = 0; i < Events.size(); i++)
     {
-        QTime tmp = currentTime;
         int Begin = generator->bounded(1, 30); // Генерируем первое число от 1 до 30
         int diff = Events.at(i).GetInterval();
 
-        Events.at(i).SetStart(tmp.addSecs(Begin));
-        Events.at(i).SetEnd(tmp.addSecs(diff));
+        Events.at(i).SetStart(currentTime.addSecs(Begin));
+        Events.at(i).SetEnd(currentTime.addSecs(Begin + diff));
     }
 
 

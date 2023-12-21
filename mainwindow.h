@@ -25,6 +25,8 @@ public:
     ~MainWindow();
 
 private:
+    void PrintEvents();
+    void PrintEventsWithTime();
     QMessageBox ErrorMsgBox;
     Ui::MainWindow *ui;
     QTimer *tmr;
