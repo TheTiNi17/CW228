@@ -34,6 +34,7 @@ private:
     FileParser *Fileparser;
     EventTimeGenerator *Generator;
 
+    QTime TmpTime;
     std::vector<Event> Events;
     QMessageBox ErrorMsgBox;
     QTime EndOfExecution;

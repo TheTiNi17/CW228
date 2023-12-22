@@ -44,10 +44,10 @@ void MainWindow::PrintEventsWithTime()
 
 int MainWindow::EventActualityChecker(int NumberOfEvent)
 {
-    QTime now = QTime::currentTime();
-    if (Events.at(NumberOfEvent).GetStart() <= now)
+    TmpTime = QTime::currentTime();
+    if (Events.at(NumberOfEvent).GetStart() <= TmpTime)
     {
-        if (Events.at(NumberOfEvent).GetEnd() >= now)
+        if (Events.at(NumberOfEvent).GetEnd() >= TmpTime)
         {
             return 1;
         }
@@ -58,7 +58,7 @@ int MainWindow::EventActualityChecker(int NumberOfEvent)
 
 void MainWindow::updateTime()
 {
-    ui->label->setText(QTime::currentTime().toString());
+    ui->label->setText(QString::fromStdString(" " + QTime::currentTime().toString().toStdString() + " "));
 }
 
 void MainWindow::UpdateActiveEvents()
