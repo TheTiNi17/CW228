@@ -6,7 +6,7 @@
 #include <QTime>
 #include <QMessageBox>
 
-#include "eventgenerator.h"
+#include "eventtimegenerator.h"
 #include "fileparser.h"
 
 QT_BEGIN_NAMESPACE
@@ -28,12 +28,16 @@ private:
     void PrintEvents();
     void PrintEventsWithTime();
     int EventActualityChecker(int NumberOfEvent);
-    QMessageBox ErrorMsgBox;
+
     Ui::MainWindow *ui;
-    QTimer *tmr;
+    QTimer *Timer;
+    FileParser *Fileparser;
+    EventTimeGenerator *Generator;
+
+    std::vector<Event> Events;
+    QMessageBox ErrorMsgBox;
     QTime EndOfExecution;
-    FileParser fileparser;
-    std::vector <Event> Events;
+
 private slots:
     void updateTime();
     void UpdateActiveEvents();

@@ -4,18 +4,24 @@
 MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    tmr = new QTimer(this); // Создание объекта класса QTimer и передаем адресс переменной
-    tmr->setInterval(1000); // Задаем интервал таймера
-    connect(tmr, SIGNAL(timeout()), this, SLOT(updateTime())); // Подключаем сигнал таймера к нашему слоту
+    Timer = new QTimer(this); // Создание объекта класса QTimer и передаем адресс переменной
+    Timer->setInterval(1000); // Задаем интервал таймера
+    connect(Timer, SIGNAL(timeout()), this, SLOT(updateTime())); // Подключаем сигнал таймера к нашему слоту
+    Timer->start(); // Запускаем таймер
 
-    tmr->start(); // Запускаем таймер
+    Generator = new EventTimeGenerator();
+    Fileparser = new FileParser();
+
     ui->TrackingButton->setEnabled(false);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
-    delete tmr;
+    delete Timer;
+    delete Generator;
+    delete Fileparser;
+    Events.clear();
 }
 
 void MainWindow::PrintEvents()
@@ -68,26 +74,18 @@ void MainWindow::UpdateActiveEvents()
 
     if (EndOfExecution <= QTime::currentTime())
     {
-        disconnect(tmr, SIGNAL(timeout()), this, SLOT(UpdateActiveEvents())); // Подключаем сигнал таймера к нашему слоту
+        disconnect(Timer, SIGNAL(timeout()), this, SLOT(UpdateActiveEvents())); // Подключаем сигнал таймера к нашему слоту
     }
 }
 
 void MainWindow::on_TrackingButton_clicked()
 {
-    EventGenerator g;
-
-    g.Generate(Events, QTime::currentTime());
-
-    EndOfExecution = QTime::currentTime().addSecs(36);
+    Generator->Generate(Events, QTime::currentTime());
+    EndOfExecution = QTime::currentTime().addSecs(37);
 
     PrintEventsWithTime();
 
-    connect(tmr, SIGNAL(timeout()), this, SLOT(UpdateActiveEvents())); // Подключаем сигнал таймера к нашему слоту
-
-    if (EndOfExecution <= QTime::currentTime())
-    {
-        disconnect(tmr, SIGNAL(timeout()), this, SLOT(UpdateActiveEvents())); // Подключаем сигнал таймера к нашему слоту
-    }
+    connect(Timer, SIGNAL(timeout()), this, SLOT(UpdateActiveEvents())); // Подключаем сигнал таймера к слоту печати активных ивентов
 }
 
 void MainWindow::on_CheckFileButton_clicked()
@@ -96,10 +94,8 @@ void MainWindow::on_CheckFileButton_clicked()
     ui->TrackingButton->setEnabled(false);
     Events.clear();
 
-    Events = fileparser.GetFileContent(ui->CheckFileLine->text().toStdString());
-
-    //int EventChecker = fileparser.CheckEvents();
-    int SizeChecker = fileparser.CheckSize();
+    Events = Fileparser->GetFileContent(ui->CheckFileLine->text().toStdString());
+    int SizeChecker = Fileparser->CheckSize();
 
     switch(SizeChecker)
     {
