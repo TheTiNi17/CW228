@@ -27,6 +27,7 @@ public:
 private:
     void PrintEvents();
     void PrintEventsWithTime();
+    int EventActualityChecker(int NumberOfEvent);
     QMessageBox ErrorMsgBox;
     Ui::MainWindow *ui;
     QTimer *tmr;

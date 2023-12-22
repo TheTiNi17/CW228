@@ -1,65 +1,52 @@
 #include "fileparser.h"
 
-FileParser::FileParser()
-{
-    //std::string Result = FileContent(FileName);
-}
+FileParser::FileParser(){}
 
 FileParser::~FileParser()
 {
     Events.clear();
+    SizeError = 0;
+    EventSettingsError = 0;
 }
 
-
-std::vector<Event> FileParser::FileContent(std::string FileName)
+std::vector<Event> FileParser::GetFileContent(std::string FileName)
 {
-    Events.clear(); // массив обнуляется
-    Error = 0; //ошибка обнуляется
-    //получение содержимого файла
+    Events.clear(); // Массив обнуляется
+    EventSettingsError = 0; // Ошибка параметров ивента обнуляется
+    SizeError = 0; // Ошибка обнуляется
+
+    // Получение содержимого файла
     std::ifstream file(FileName);
     if (!file.is_open())
     {
-        //std::cout << "Ошибка: файл " << FileName << " не найден\n";
-        Error = 1;
+        SizeError = 1; // Ошибка: файл FileName не найден";
         return Events;
     }
+    //
 
+    // Преобразование файла в строку
     std::stringstream StringStream;
     StringStream << file.rdbuf();
     std::string Content = StringStream.str();
-
     file.close();
+    //
 
-    std::vector<std::string> EventsStrings;
-
-    //std::cout << "File content: " << Content << "\n\n";
-
+    // Дробление строки по ивентам
+    std::vector<std::string> EventsStrings; // Содержит строки ивентов
     std::string delimiter = "; "; // Символ-разделитель
     size_t pos = 0; // Переменная для хранения позиции разделителя
     std::string token; // Переменная для хранения отдельных подстрок
 
-    while ((pos = Content.find(delimiter)) != std::string::npos)
-    { // Пока находим разделитель
+    while ((pos = Content.find(delimiter)) != std::string::npos) // пока находим разделитель
+    {
         token = Content.substr(0, pos); // Получаем подстроку до разделителя
-
-        //std::cout << token << std::endl; // Выводим подстроку
-        EventsStrings.push_back(token);
-
+        EventsStrings.push_back(token); // Сохраняем подстроку
         Content.erase(0, pos + delimiter.length()); // Удаляем обработанную часть строки
     }
+    EventsStrings.push_back(Content); // Сохраняем оставшуюся часть строки
+    //
 
-    //std::cout << Content << std::endl; // Выводим оставшуюся часть строки
-    EventsStrings.push_back(Content);
-
-    //OUTPUT 1
-    /*
-    std::cout << "\nFirst:\n";
-    for (int i = 0; i < EventsStrings.size(); i++)
-    {
-        std::cout << EventsStrings.at(i) << "\n";
-    }
-    */
-
+    // Получение из строк параметр для Event
     std::vector<std::string> tmp;
     std::vector<std::vector<std::string>> tmptmp;
 
@@ -71,84 +58,77 @@ std::vector<Event> FileParser::FileContent(std::string FileName)
         Content = EventsStrings.at(i);
 
         while ((pos = Content.find(delimiter)) != std::string::npos)
-        { // Пока находим разделитель
-            token = Content.substr(0, pos); // Получаем подстроку до разделителя
-
-            tmp.push_back(token); // Сохраняем подстроку
-
-            Content.erase(0, pos + delimiter.length()); // Удаляем обработанную часть строки
-        }
-
-        tmp.push_back(Content);// Сохраняем оставшуюся часть строки
-
-        //check size == 3
-
-        if (tmp.size() != 3)
         {
-            Error = 2;
-            //return Events;
+            token = Content.substr(0, pos);
+            tmp.push_back(token);
+            Content.erase(0, pos + delimiter.length());
+        }
+        tmp.push_back(Content);
+        //
+
+        // Проверка на правильное кол-вл параметров для ивента
+        if (tmp.size() != 3) // Некорректные события игнорируются
+        {
+            EventSettingsError = 1;
         }
         else
         {
             tmptmp.push_back(tmp);
         }
         tmp.clear();
+        //
     }
+    //
 
-    //OUTPUT 2
-    /*
-    std::cout << "\nSecond:\n";
-    for (int i = 0; i < tmptmp.size(); i++)
-    {
-        for (int j = 0; j < 3; j++)
-        {
-            std::cout << tmptmp.at(i).at(j) << "\n";
-        }
-    }*/
-
+    // Проверка на корректность параметра интервала
     int Number = 0;
 
-    //std::cout << tmptmp.size();
     for (int i = 0; i < tmptmp.size(); i++)
     {
         try
         {
             Number = std::stoi(tmptmp.at(i).at(2)); // Пробуем преобразовать строку в int
-            Event newevent = Event(tmptmp.at(i).at(0), tmptmp.at(i).at(1), Number);
-            Events.push_back(newevent);
+
+            if ((Number > 5) || (Number < 3)) // Недопустимое значение для интервала
+            {
+                EventSettingsError = 3;
+            }
+            else
+            {
+                Event newevent = Event(tmptmp.at(i).at(0), tmptmp.at(i).at(1), Number);
+                Events.push_back(newevent);
+            }
         } catch (...)
         {
-            Error = 3; // Если возникло исключение, Error
-            ///
+            EventSettingsError = 2; // Если возникло исключение, 3 параметр не целое число
         }
     }
+    //
 
-    //std::cout << "Amount of Events: " Events.size();
-    //THIRD
-    /*
-    for (int i = 0; i < Events.size(); i++)
-    {
-        Events.at(i).Print();
-    }
-    */
-
+    // Проверка на кол-во ивентов
     if ((Events.size() < 31) && (Events.size() > 4) && (Events.size() != 20)) // от 30 до 5 ивентов в зоне доступности
     {
-        Error = 4;
+        SizeError = 2;
     }
-
-    else
+    else // Слишком много или мало ивентов
     {
-        Error = 5; // хуйня
+        SizeError = 3;
     }
+    //
 
+    // Сброс переменных
     tmp.clear();
     tmptmp.clear();
-
+    //
     return Events;
 }
 
-int FileParser::Check()
+int FileParser::CheckSize()
 {
-    return Error;
+    return SizeError;
+}
+
+int FileParser::CheckEvents()
+{
+    return EventSettingsError;
 }

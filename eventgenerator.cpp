@@ -1,47 +1,15 @@
 #include "eventgenerator.h"
 
-EventGenerator::EventGenerator()
-{}
+EventGenerator::EventGenerator(){}
 
-void EventGenerator::Generate(std::vector<Event> &Events, QTime currentTime)
+void EventGenerator::Generate(std::vector<Event> &Events, QTime CurrentTime)
 {
-
     QRandomGenerator *generator = QRandomGenerator::global();
-
     for (int i = 0; i < Events.size(); i++)
     {
-        int Begin = generator->bounded(1, 30); // Генерируем первое число от 1 до 30
-        int diff = Events.at(i).GetInterval();
+        int RandomStart = generator->bounded(-2, 30); // Генерируем случайное число от -2 до 30 временные рамки генерации от (T1 = 1 до T2 = 35) секунд
 
-        Events.at(i).SetStart(currentTime.addSecs(Begin));
-        Events.at(i).SetEnd(currentTime.addSecs(Begin + diff));
+        Events.at(i).SetStart(CurrentTime.addSecs(RandomStart)); // Интервал это значение от 3 до 5
+        Events.at(i).SetEnd(CurrentTime.addSecs(RandomStart + Events.at(i).GetInterval()));
     }
-
-
-
-
-
-
-
-
-    /* QList<QPair<QTime, QTime>> pairs;
-    QRandomGenerator *generator = QRandomGenerator::global();
-
-    for (int i = 0; i < EventsAmount; ++i)
-    {
-        int Start = generator->bounded(1, 30); // Генерируем первое число от 1 до 30
-        int diff = Events.at(i).GetInterval();
-        int End = Start+diff;
-
-        QTime newStart = QTime().addSecs(Start);
-        QTime newEnd = QTime().addSecs(End);
-        pairs.append(qMakePair(newStart, newEnd)); // Добавляем пару в список
-    }
-
-    for (int i = 0; i<EventsAmount; i++)
-    {
-        Events[i].SetStart(pairs[i].first);
-        Events[i].SetEnd(pairs[i].second);
-    }
-*/
 }
