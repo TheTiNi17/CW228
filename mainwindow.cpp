@@ -39,9 +39,9 @@ void MainWindow::PrintEventsWithTime()
 int MainWindow::EventActualityChecker(int NumberOfEvent)
 {
     QTime now = QTime::currentTime();
-    if (Events.at(NumberOfEvent).GetStart() > now)
+    if (Events.at(NumberOfEvent).GetStart() <= now)
     {
-        if (Events.at(NumberOfEvent).GetEnd() < now)
+        if (Events.at(NumberOfEvent).GetEnd() >= now)
         {
             return 1;
         }
@@ -55,28 +55,39 @@ void MainWindow::updateTime()
     ui->label->setText(QTime::currentTime().toString());
 }
 
+void MainWindow::UpdateActiveEvents()
+{
+    ui->ActiveEventsOutput->setText("");
+    for (int i = 0; i < Events.size(); i++)
+    {
+        if (EventActualityChecker(i))
+        {
+            ui->ActiveEventsOutput->append(QString::fromStdString("№ " + std::to_string(i + 1) + ": " + Events.at(i).ReturnPrintWithTime()));
+        }
+    }
+
+    if (EndOfExecution <= QTime::currentTime())
+    {
+        disconnect(tmr, SIGNAL(timeout()), this, SLOT(UpdateActiveEvents())); // Подключаем сигнал таймера к нашему слоту
+    }
+}
+
 void MainWindow::on_TrackingButton_clicked()
 {
-    /*EventGenerator g;
+    EventGenerator g;
 
     g.Generate(Events, QTime::currentTime());
-    QTime EndOfExecution = QTime::currentTime().addSecs(36);
+
+    EndOfExecution = QTime::currentTime().addSecs(36);
 
     PrintEventsWithTime();
 
-    while (EndOfExecution > QTime::currentTime())
-    {
-        updateTime(); // часы на экране пользователя
-        //ui->ActiveEventsOutput->setText("");
+    connect(tmr, SIGNAL(timeout()), this, SLOT(UpdateActiveEvents())); // Подключаем сигнал таймера к нашему слоту
 
-        for (int i = 0; i < Events.size(); i++)
-        {
-            if (EventActualityChecker(i))
-            {
-                ui->ActiveEventsOutput->append(QString::fromStdString(Events.at(i).ReturnPrint()));
-            }
-        }
-    }*/
+    if (EndOfExecution <= QTime::currentTime())
+    {
+        disconnect(tmr, SIGNAL(timeout()), this, SLOT(UpdateActiveEvents())); // Подключаем сигнал таймера к нашему слоту
+    }
 }
 
 void MainWindow::on_CheckFileButton_clicked()

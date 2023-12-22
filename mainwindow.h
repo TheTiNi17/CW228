@@ -31,10 +31,12 @@ private:
     QMessageBox ErrorMsgBox;
     Ui::MainWindow *ui;
     QTimer *tmr;
+    QTime EndOfExecution;
     FileParser fileparser;
     std::vector <Event> Events;
 private slots:
     void updateTime();
+    void UpdateActiveEvents();
     void on_TrackingButton_clicked();
     void on_CheckFileButton_clicked();
 };

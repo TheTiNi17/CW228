@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>917</width>
+    <height>627</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -43,7 +43,7 @@
     <property name="geometry">
      <rect>
       <x>470</x>
-      <y>380</y>
+      <y>470</y>
       <width>161</width>
       <height>101</height>
      </rect>
@@ -61,7 +61,7 @@
     <property name="geometry">
      <rect>
       <x>50</x>
-      <y>330</y>
+      <y>420</y>
       <width>281</width>
       <height>61</height>
      </rect>
@@ -74,7 +74,7 @@
     <property name="geometry">
      <rect>
       <x>340</x>
-      <y>320</y>
+      <y>410</y>
       <width>131</width>
       <height>71</height>
      </rect>
@@ -87,7 +87,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>350</y>
+      <y>440</y>
       <width>49</width>
       <height>16</height>
      </rect>
@@ -104,8 +104,8 @@
      <rect>
       <x>460</x>
       <y>120</y>
-      <width>181</width>
-      <height>161</height>
+      <width>371</width>
+      <height>231</height>
      </rect>
     </property>
     <property name="mouseTracking">
@@ -150,7 +150,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
       <x>10</x>
       <y>120</y>
       <width>421</width>
-      <height>161</height>
+      <height>231</height>
      </rect>
     </property>
     <property name="mouseTracking">
@@ -192,7 +192,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>917</width>
      <height>21</height>
     </rect>
    </property>
