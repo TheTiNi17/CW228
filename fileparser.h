@@ -14,6 +14,7 @@
 class FileParser
 {
 private:
+    void EventsShaffle(std::vector<Event> &Events);
     std::vector<Event> Events;
     int SizeError = 0; // 0 - 20 событий (нет ошибки)
                        // 1 - файл не отрывается

@@ -9,14 +9,24 @@ FileParser::~FileParser()
     EventSettingsError = 0;
 }
 
+void FileParser::EventsShaffle(std::vector<Event> &Events)
+{
+    std::random_device rd;
+    std::mt19937 g(rd());
+    std::shuffle(Events.begin(), Events.end(), g);
+}
+
 std::vector<Event> FileParser::GetFileContent(std::string FileName)
 {
     Events.clear(); // Массив обнуляется
     EventSettingsError = 0; // Ошибка параметров ивента обнуляется
     SizeError = 0; // Ошибка обнуляется
 
+    std::string NewFileName = R"()"; // for 1 "\" in file path
+    NewFileName = NewFileName + FileName;
+
     // Получение содержимого файла
-    std::ifstream file(FileName);
+    std::ifstream file(NewFileName);
     if (!file.is_open())
     {
         SizeError = 1; // Ошибка: файл FileName не найден";
@@ -120,6 +130,11 @@ std::vector<Event> FileParser::GetFileContent(std::string FileName)
     tmp.clear();
     tmptmp.clear();
     //
+
+    // Перемешивание событий
+    EventsShaffle(Events);
+    //
+
     return Events;
 }
 

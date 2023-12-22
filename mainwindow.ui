@@ -230,7 +230,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
          </font>
         </property>
         <property name="text">
-         <string>C:\\Code\\QtProjects\\CW_OOP\\CW_OOP\\Example.txt</string>
+         <string>C:\Code\Example.txt</string>
         </property>
        </widget>
       </item>

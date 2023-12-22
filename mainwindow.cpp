@@ -80,7 +80,9 @@ void MainWindow::UpdateActiveEvents()
 
 void MainWindow::on_TrackingButton_clicked()
 {
-    Generator->Generate(Events, QTime::currentTime());
+    //Generator->GenerateRandom(Events, QTime::currentTime());     // uses <QRandomGenerator> lib
+    Generator->GenerateRandomNormal(Events, QTime::currentTime()); // uses <random> lib
+
     EndOfExecution = QTime::currentTime().addSecs(37);
 
     PrintEventsWithTime();

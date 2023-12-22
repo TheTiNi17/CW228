@@ -32,13 +32,13 @@ void Event::Print()
 
 std::string Event::ReturnPrint()
 {
-    std::string Str = "Название: " + Name + " Тип: " + TypeName + " Интервал: " + std::to_string(Interval);
+    std::string Str = "Название: " + Name + ", Тип: " + TypeName + ", Интервал: " + std::to_string(Interval);
     return Str;
 }
 
 std::string Event::ReturnPrintWithTime()
 {
-    std::string Str = "Название: " + Name + " Тип: " + TypeName + " Интервал: " + std::to_string(Interval) + " Начало: " + Start.toString().toStdString() + " Конец: " + End.toString().toStdString();
+    std::string Str = "Название: " + Name + ", Тип: " + TypeName + ", Интервал: " + std::to_string(Interval) + ", Начало: " + Start.toString().toStdString() + ", Конец: " + End.toString().toStdString();
     return Str;
 }
 
